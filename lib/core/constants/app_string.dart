@@ -2,10 +2,6 @@ class AppStrings {
  
 
   static const String appName = 'Expenzia';
-   static const List<String> bottomNaviagationLabels = [
-    'Home',
-    'Explore',
-    'Favorites',
-    'Profile',
-  ];
+  static const String onboardingTitle = 'Spend Smarter\nSave More';
+  static const String getStarted = 'Get Started';
 }
