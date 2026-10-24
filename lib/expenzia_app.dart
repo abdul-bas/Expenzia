@@ -1,5 +1,8 @@
 
+
+import 'package:expenzia_app/features/splash/presentation/pages/splash_page.dart';
 import 'package:flutter/material.dart';
+
 
 class ExpenziaApp extends StatelessWidget {
   const ExpenziaApp({super.key});
@@ -7,9 +10,10 @@ class ExpenziaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Expenzia',
       debugShowCheckedModeBanner: false,
+      title: 'Flutter Home',
      
+      home: const SplashPage(),
     );
   }
 }
