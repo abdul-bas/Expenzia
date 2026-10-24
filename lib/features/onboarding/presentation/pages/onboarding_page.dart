@@ -1,6 +1,7 @@
 import 'package:expenzia_app/core/constants/app_colors.dart';
 import 'package:expenzia_app/core/constants/app_string.dart';
 import 'package:expenzia_app/core/theme/app_text_styles.dart';
+import 'package:expenzia_app/features/main/presentation/pages/main_page.dart';
 import 'package:expenzia_app/features/onboarding/presentation/widgets/get_started_button.dart';
 import 'package:expenzia_app/features/onboarding/presentation/widgets/onboarding_header.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,10 @@ class OnboardingPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: GetStartedButton(
                 onPressed: () {
-              
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage()),
+                  );
                 },
               ),
             ),

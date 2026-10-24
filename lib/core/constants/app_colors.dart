@@ -15,4 +15,12 @@ class AppColors {
   static const Color buttonTop = Color(0xFF69AEA9);
   static const Color buttonBottom = Color(0xFF3F8782);
   static const Color buttonShadow = Color(0xFF3E7C78);
+
+  // Bottom navigation
+  static const Color navInactive = Color(0xFF2F6F6A);
+  
+   // Transaction
+  static const Color primary = Color(0xFF2F7E79);
+  static const Color textSecondary = Color(0xFF666666);
+  static const Color border = Color(0xFFDDDDDD);
 }

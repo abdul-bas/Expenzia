@@ -26,4 +26,36 @@ class AppTextStyles {
         letterSpacing: -0.36,
         color: AppColors.white,
       );
+        static TextStyle get appBarTitle => GoogleFonts.inter(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: AppColors.white,
+      );
+
+  static TextStyle get fieldLabel => GoogleFonts.inter(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0.72,
+        color: AppColors.textSecondary,
+      );
+
+  static TextStyle get fieldValue => GoogleFonts.inter(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        letterSpacing: -0.14,
+        color: AppColors.textSecondary,
+      );
+
+  static TextStyle get fieldValueActive => GoogleFonts.inter(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        letterSpacing: -0.14,
+        color: AppColors.green,
+      );
+
+  static TextStyle get clearText => GoogleFonts.inter(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        color: AppColors.green,
+      );
 }
