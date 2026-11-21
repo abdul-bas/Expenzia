@@ -13,6 +13,12 @@ class AppColors {
   static const Color splashGradientStart = Color(0xFF63B5AF); // rgb(99, 181, 175)
   static const Color splashGradientEnd = Color(0xFF438883);   // rgb(67, 136, 131)
 
+  // Onboarding Colors from Figma
+  static const Color onboardingTitle = Color(0xFF438883);
+  static const Color buttonGradientStart = Color(0xFF69AEA9);
+  static const Color buttonGradientEnd = Color(0xFF3F8782);
+  static const Color buttonShadow = Color(0xFF3E7C78);
+
   static const LinearGradient splashGradient = LinearGradient(
     begin: Alignment(-0.45, -0.9),
     end: Alignment(0.45, 0.9),
@@ -24,6 +30,12 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [primary, primaryDark],
+  );
+
+  static const LinearGradient buttonGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [buttonGradientStart, buttonGradientEnd],
   );
 
   // Background and surface

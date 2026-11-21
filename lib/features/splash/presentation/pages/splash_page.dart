@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:expenzia/core/routes/app_routes.dart';
 import 'package:expenzia/features/splash/presentation/controllers/splash_controller.dart';
 import 'package:expenzia/features/splash/presentation/widgets/splash_background.dart';
 import 'package:expenzia/features/splash/presentation/widgets/splash_title.dart';
@@ -13,6 +14,15 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Navigate to Onboarding screen after splash display
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 2), () {
+        if (context.mounted) {
+          Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
+        }
+      });
+    });
+
     return Scaffold(
       body: ListenableBuilder(
         listenable: controller,

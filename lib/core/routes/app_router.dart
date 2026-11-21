@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expenzia/core/routes/app_routes.dart';
+import 'package:expenzia/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:expenzia/features/splash/presentation/pages/splash_page.dart';
 
 class AppRouter {
@@ -9,8 +10,10 @@ class AppRouter {
     switch (settings.name) {
       case AppRoutes.splash:
         return MaterialPageRoute(builder: (_) => SplashPage());
+      case AppRoutes.onboarding:
+        return MaterialPageRoute(builder: (_) => OnboardingPage());
       default:
-        return MaterialPageRoute(builder: (_) => SplashPage());
+        return MaterialPageRoute(builder: (_) => OnboardingPage());
     }
   }
 }
