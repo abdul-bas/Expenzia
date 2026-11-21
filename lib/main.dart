@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:expenzia/splash_screen.dart';
+import 'package:expenzia/core/constants/app_strings.dart';
+import 'package:expenzia/core/routes/app_router.dart';
+import 'package:expenzia/core/routes/app_routes.dart';
+import 'package:expenzia/core/theme/app_theme.dart';
+import 'package:expenzia/features/splash/presentation/pages/splash_page.dart';
 
 void main() {
   runApp(const ExpenziaApp());
@@ -11,17 +15,12 @@ class ExpenziaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Expenzia',
+      title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF2F7F79),
-          primary: const Color(0xFF2F7F79),
-          brightness: Brightness.light,
-        ),
-        useMaterial3: true,
-      ),
-      home: SplashScreen(),
+      theme: AppTheme.light,
+      initialRoute: AppRoutes.splash,
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      home: SplashPage(),
     );
   }
 }
