@@ -1,4 +1,4 @@
-import 'package:expenzia/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
 
 abstract class TransactionRepository {
   Future<List<TransactionEntity>> getTransactions();

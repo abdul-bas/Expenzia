@@ -1,7 +1,7 @@
 import 'package:expenzia/core/database/database_helper.dart';
-import 'package:expenzia/data/models/transaction_model.dart';
-import 'package:expenzia/domain/entities/transaction_entity.dart';
-import 'package:expenzia/domain/repositories/transaction_repository.dart';
+import 'package:expenzia/features/home/data/models/transaction_model.dart';
+import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/home/domain/repositories/transaction_repository.dart';
 
 class TransactionRepositoryImpl implements TransactionRepository {
   final DatabaseHelper databaseHelper;

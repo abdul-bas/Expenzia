@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:expenzia/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
 
 class TransactionItemWidget extends StatelessWidget {
   final TransactionEntity transaction;

@@ -1,4 +1,4 @@
-import 'package:expenzia/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
 
 class TransactionModel extends TransactionEntity {
   const TransactionModel({

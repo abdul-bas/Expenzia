@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:expenzia/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
 import 'package:expenzia/features/home/presentation/widgets/transaction_item_widget.dart';
 
 class TransactionsHistorySection extends StatelessWidget {

@@ -10,15 +10,8 @@ import 'package:expenzia/features/home/presentation/widgets/home_header.dart';
 import 'package:expenzia/features/home/presentation/widgets/metrics_row.dart';
 import 'package:expenzia/features/home/presentation/widgets/transactions_history_section.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _selectedNavIndex = 0;
 
   void _showAddTransactionModal(BuildContext context) {
     showModalBottomSheet(
@@ -45,6 +38,15 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         bottom: false,
         child: BlocBuilder<HomeBloc, HomeState>(
+          buildWhen: (previous, current) =>
+              current is! HomeLoaded ||
+              previous is! HomeLoaded ||
+              previous.transactions != current.transactions ||
+              previous.totalBalance != current.totalBalance ||
+              previous.totalIncome != current.totalIncome ||
+              previous.totalExpense != current.totalExpense ||
+              previous.dailyAverage != current.dailyAverage ||
+              previous.weekly != current.weekly,
           builder: (context, state) {
             if (state is HomeLoading) {
               return const Center(
@@ -66,7 +68,9 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 12),
                     ElevatedButton(
                       onPressed: () {
-                        context.read<HomeBloc>().add(const LoadHomeDataEvent());
+                        context
+                            .read<HomeBloc>()
+                            .add(const LoadHomeDataEvent());
                       },
                       child: const Text('Retry'),
                     ),
@@ -79,11 +83,11 @@ class _HomePageState extends State<HomePage> {
                 ? state
                 : const HomeLoaded(
                     transactions: [],
-                    totalBalance: 2548.00,
-                    totalIncome: 1840.00,
-                    totalExpense: 284.00,
-                    dailyAverage: 1548.00,
-                    weekly: 548.00,
+                    totalBalance: 0,
+                    totalIncome: 0,
+                    totalExpense: 0,
+                    dailyAverage: 0,
+                    weekly: 0,
                   );
 
             return SingleChildScrollView(
@@ -136,12 +140,20 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
-      bottomNavigationBar: CustomBottomNavBar(
-        selectedIndex: _selectedNavIndex,
-        onItemSelected: (index) {
-          setState(() => _selectedNavIndex = index);
+      bottomNavigationBar: BlocSelector<HomeBloc, HomeState, int>(
+        selector: (state) =>
+            state is HomeLoaded ? state.selectedNavIndex : 0,
+        builder: (context, selectedIndex) {
+          return CustomBottomNavBar(
+            selectedIndex: selectedIndex,
+            onItemSelected: (index) {
+              context
+                  .read<HomeBloc>()
+                  .add(ChangeBottomNavIndexEvent(index));
+            },
+            onAddPressed: () => _showAddTransactionModal(context),
+          );
         },
-        onAddPressed: () => _showAddTransactionModal(context),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:expenzia/core/constants/app_colors.dart';
-import 'package:expenzia/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
 
 class AddTransactionSheet extends StatefulWidget {
   final Function(TransactionEntity transaction) onAdd;

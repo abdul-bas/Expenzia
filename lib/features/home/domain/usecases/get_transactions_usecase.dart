@@ -1,5 +1,5 @@
-import 'package:expenzia/domain/entities/transaction_entity.dart';
-import 'package:expenzia/domain/repositories/transaction_repository.dart';
+import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/home/domain/repositories/transaction_repository.dart';
 
 class GetTransactionsUseCase {
   final TransactionRepository repository;

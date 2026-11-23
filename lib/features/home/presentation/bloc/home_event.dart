@@ -1,4 +1,4 @@
-import 'package:expenzia/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
 
 abstract class HomeEvent {
   const HomeEvent();
@@ -18,4 +18,10 @@ class DeleteTransactionEvent extends HomeEvent {
   final int id;
 
   const DeleteTransactionEvent(this.id);
+}
+
+class ChangeBottomNavIndexEvent extends HomeEvent {
+  final int index;
+
+  const ChangeBottomNavIndexEvent(this.index);
 }

@@ -1,4 +1,4 @@
-import 'package:expenzia/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
 
 abstract class HomeState {
   const HomeState();
@@ -21,6 +21,7 @@ class HomeLoaded extends HomeState {
   final double weekly;
   final String greeting;
   final String userName;
+  final int selectedNavIndex;
 
   const HomeLoaded({
     required this.transactions,
@@ -31,6 +32,7 @@ class HomeLoaded extends HomeState {
     required this.weekly,
     this.greeting = 'Good afternoon,',
     this.userName = 'Sahal Muhammed',
+    this.selectedNavIndex = 0,
   });
 
   HomeLoaded copyWith({
@@ -42,6 +44,7 @@ class HomeLoaded extends HomeState {
     double? weekly,
     String? greeting,
     String? userName,
+    int? selectedNavIndex,
   }) {
     return HomeLoaded(
       transactions: transactions ?? this.transactions,
@@ -52,6 +55,7 @@ class HomeLoaded extends HomeState {
       weekly: weekly ?? this.weekly,
       greeting: greeting ?? this.greeting,
       userName: userName ?? this.userName,
+      selectedNavIndex: selectedNavIndex ?? this.selectedNavIndex,
     );
   }
 }
