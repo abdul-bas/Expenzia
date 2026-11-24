@@ -4,6 +4,8 @@ import 'package:expenzia/core/constants/app_strings.dart';
 import 'package:expenzia/core/routes/app_router.dart';
 import 'package:expenzia/core/routes/app_routes.dart';
 import 'package:expenzia/core/theme/app_theme.dart';
+import 'package:expenzia/features/expense/presentation/bloc/expense_bloc.dart';
+import 'package:expenzia/features/expense/presentation/bloc/expense_event.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_bloc.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_event.dart';
 import 'package:expenzia/features/splash/presentation/pages/splash_page.dart';
@@ -47,6 +49,12 @@ class ExpenziaApp extends StatelessWidget {
               addTransactionUseCase: addTransactionUseCase,
               deleteTransactionUseCase: deleteTransactionUseCase,
             )..add(const LoadHomeDataEvent()),
+          ),
+          BlocProvider<ExpenseBloc>(
+            create: (_) => ExpenseBloc(
+              getTransactionsUseCase: getTransactionsUseCase,
+              deleteTransactionUseCase: deleteTransactionUseCase,
+            )..add(const LoadExpenseTransactionsEvent()),
           ),
         ],
         child: MaterialApp(

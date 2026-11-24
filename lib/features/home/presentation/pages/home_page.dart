@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:expenzia/core/routes/app_routes.dart';
+import 'package:expenzia/features/expense/presentation/pages/add_expense_page.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_bloc.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_event.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_state.dart';
@@ -27,16 +28,14 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         bottom: false,
         child: BlocBuilder<HomeBloc, HomeState>(
-          buildWhen: (previous, current) =>
-              current is! HomeLoaded ||
-              previous is! HomeLoaded ||
-              previous.transactions != current.transactions ||
-              previous.totalBalance != current.totalBalance ||
-              previous.totalIncome != current.totalIncome ||
-              previous.totalExpense != current.totalExpense ||
-              previous.dailyAverage != current.dailyAverage ||
-              previous.weekly != current.weekly,
           builder: (context, state) {
+            final navIndex = state is HomeLoaded ? state.selectedNavIndex : 0;
+
+            // When index 1 (History / Add Expense) is selected, show AddExpensePage matching Figma 1:386
+            if (navIndex == 1) {
+              return const AddExpensePage(showBottomNav: false);
+            }
+
             if (state is HomeLoading) {
               return const Center(
                 child: CircularProgressIndicator(
@@ -117,6 +116,11 @@ class HomePage extends StatelessWidget {
                   // Transactions History List
                   TransactionsHistorySection(
                     transactions: loadedState.transactions,
+                    onSeeAll: () {
+                      context
+                          .read<HomeBloc>()
+                          .add(const ChangeBottomNavIndexEvent(1));
+                    },
                     onDeleteTransaction: (id) {
                       context
                           .read<HomeBloc>()

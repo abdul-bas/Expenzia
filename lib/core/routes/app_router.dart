@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expenzia/core/routes/app_routes.dart';
+import 'package:expenzia/features/expense/presentation/pages/add_expense_page.dart';
 import 'package:expenzia/features/home/presentation/pages/home_page.dart';
 import 'package:expenzia/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:expenzia/features/splash/presentation/pages/splash_page.dart';
@@ -18,6 +19,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomePage());
       case AppRoutes.transaction:
         return MaterialPageRoute(builder: (_) => TransactionPage());
+      case AppRoutes.addExpense:
+        return MaterialPageRoute(builder: (_) => const AddExpensePage());
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());
     }

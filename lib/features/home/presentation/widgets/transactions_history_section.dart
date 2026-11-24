@@ -5,11 +5,13 @@ import 'package:expenzia/features/home/presentation/widgets/transaction_item_wid
 class TransactionsHistorySection extends StatelessWidget {
   final List<TransactionEntity> transactions;
   final Function(int id)? onDeleteTransaction;
+  final VoidCallback? onSeeAll;
 
   const TransactionsHistorySection({
     super.key,
     required this.transactions,
     this.onDeleteTransaction,
+    this.onSeeAll,
   });
 
   @override
@@ -19,8 +21,8 @@ class TransactionsHistorySection extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
+          children: [
+            const Text(
               'Transactions history',
               style: TextStyle(
                 fontFamily: 'Inter',
@@ -30,14 +32,17 @@ class TransactionsHistorySection extends StatelessWidget {
                 letterSpacing: -0.36,
               ),
             ),
-            Text(
-              'See all',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                color: Color(0xFF666666),
-                letterSpacing: -0.28,
+            GestureDetector(
+              onTap: onSeeAll,
+              child: const Text(
+                'See all',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Color(0xFF666666),
+                  letterSpacing: -0.28,
+                ),
               ),
             ),
           ],
