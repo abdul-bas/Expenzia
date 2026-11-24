@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:expenzia/core/routes/app_routes.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_bloc.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_event.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_state.dart';
-import 'package:expenzia/features/home/presentation/widgets/add_transaction_sheet.dart';
 import 'package:expenzia/features/home/presentation/widgets/balance_card.dart';
 import 'package:expenzia/features/home/presentation/widgets/custom_bottom_nav_bar.dart';
 import 'package:expenzia/features/home/presentation/widgets/home_header.dart';
@@ -13,22 +13,11 @@ import 'package:expenzia/features/home/presentation/widgets/transactions_history
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  void _showAddTransactionModal(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (_) {
-        return AddTransactionSheet(
-          onAdd: (transaction) {
-            context.read<HomeBloc>().add(AddTransactionEvent(transaction));
-          },
-        );
-      },
-    );
+  Future<void> _navigateToAddTransaction(BuildContext context) async {
+    final result = await Navigator.pushNamed(context, AppRoutes.transaction);
+    if (result == true && context.mounted) {
+      context.read<HomeBloc>().add(const LoadHomeDataEvent());
+    }
   }
 
   @override
@@ -151,7 +140,7 @@ class HomePage extends StatelessWidget {
                   .read<HomeBloc>()
                   .add(ChangeBottomNavIndexEvent(index));
             },
-            onAddPressed: () => _showAddTransactionModal(context),
+            onAddPressed: () => _navigateToAddTransaction(context),
           );
         },
       ),

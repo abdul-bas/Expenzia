@@ -1,4 +1,4 @@
-import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/transaction/domain/entities/transaction_entity.dart';
 
 abstract class HomeEvent {
   const HomeEvent();

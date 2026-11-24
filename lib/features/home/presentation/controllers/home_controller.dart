@@ -1,9 +1,8 @@
-import 'package:expenzia/features/home/data/models/home_data.dart';
-import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
-import 'package:expenzia/features/home/domain/usecases/add_transaction_usecase.dart';
-import 'package:expenzia/features/home/domain/usecases/delete_transaction_usecase.dart';
-import 'package:expenzia/features/home/domain/usecases/get_transactions_usecase.dart';
-
+import 'package:expenzia/features/home/presentation/models/home_data.dart';
+import 'package:expenzia/features/transaction/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/transaction/domain/usecases/add_transaction_usecase.dart';
+import 'package:expenzia/features/transaction/domain/usecases/delete_transaction_usecase.dart';
+import 'package:expenzia/features/transaction/domain/usecases/get_transactions_usecase.dart';
 
 class HomeController {
   final GetTransactionsUseCase _getTransactions;

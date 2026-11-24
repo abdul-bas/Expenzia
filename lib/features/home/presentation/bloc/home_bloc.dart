@@ -1,11 +1,11 @@
-import 'package:expenzia/features/home/data/models/home_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:expenzia/features/home/domain/usecases/add_transaction_usecase.dart';
-import 'package:expenzia/features/home/domain/usecases/delete_transaction_usecase.dart';
-import 'package:expenzia/features/home/domain/usecases/get_transactions_usecase.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_event.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_state.dart';
 import 'package:expenzia/features/home/presentation/controllers/home_controller.dart';
+import 'package:expenzia/features/home/presentation/models/home_data.dart';
+import 'package:expenzia/features/transaction/domain/usecases/add_transaction_usecase.dart';
+import 'package:expenzia/features/transaction/domain/usecases/delete_transaction_usecase.dart';
+import 'package:expenzia/features/transaction/domain/usecases/get_transactions_usecase.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeController _controller;
@@ -26,7 +26,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ChangeBottomNavIndexEvent>(_onChangeBottomNavIndex);
   }
 
-  /// Preserves the current nav index across data reloads.
   int get _currentNavIndex {
     final s = state;
     return s is HomeLoaded ? s.selectedNavIndex : 0;

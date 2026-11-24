@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/transaction/domain/entities/transaction_entity.dart';
 import 'package:expenzia/features/home/presentation/widgets/transaction_item_widget.dart';
 
 class TransactionsHistorySection extends StatelessWidget {
@@ -61,7 +61,7 @@ class TransactionsHistorySection extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: transactions.length,
-            separatorBuilder: (_, __) => const Divider(
+            separatorBuilder: (_, _) => const Divider(
               color: Color(0xFFF0F0F0),
               height: 1,
             ),

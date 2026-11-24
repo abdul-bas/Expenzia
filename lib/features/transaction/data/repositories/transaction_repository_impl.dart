@@ -1,7 +1,7 @@
 import 'package:expenzia/core/database/database_helper.dart';
-import 'package:expenzia/features/home/data/models/transaction_model.dart';
-import 'package:expenzia/features/home/domain/entities/transaction_entity.dart';
-import 'package:expenzia/features/home/domain/repositories/transaction_repository.dart';
+import 'package:expenzia/features/transaction/data/models/transaction_model.dart';
+import 'package:expenzia/features/transaction/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/transaction/domain/repositories/transaction_repository.dart';
 
 class TransactionRepositoryImpl implements TransactionRepository {
   final DatabaseHelper databaseHelper;
@@ -11,8 +11,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
   @override
   Future<List<TransactionEntity>> getTransactions() async {
-    final list = await databaseHelper.queryAll('transactions');
-    return list.map((item) => TransactionModel.fromMap(item)).toList();
+    final maps = await databaseHelper.queryAll('transactions');
+    return maps.map((map) => TransactionModel.fromMap(map)).toList();
   }
 
   @override
