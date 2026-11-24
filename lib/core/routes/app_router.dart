@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expenzia/core/routes/app_routes.dart';
+import 'package:expenzia/features/credit/presentation/pages/credit_page.dart';
 import 'package:expenzia/features/expense/presentation/pages/add_expense_page.dart';
 import 'package:expenzia/features/home/presentation/pages/home_page.dart';
 import 'package:expenzia/features/onboarding/presentation/pages/onboarding_page.dart';
@@ -23,6 +24,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => TransactionPage());
       case AppRoutes.addExpense:
         return MaterialPageRoute(builder: (_) => const AddExpensePage());
+      case AppRoutes.credit:
+        return MaterialPageRoute(builder: (_) => CreditPage());
       case AppRoutes.editTransaction:
         final transaction = settings.arguments as TransactionEntity;
         return MaterialPageRoute(

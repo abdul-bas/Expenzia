@@ -87,6 +87,8 @@ class AddExpensePage extends StatelessWidget {
               onItemSelected: (index) {
                 if (index == 0) {
                   Navigator.pushReplacementNamed(context, AppRoutes.home);
+                } else if (index == 2) {
+                  Navigator.pushReplacementNamed(context, AppRoutes.credit);
                 }
               },
               onAddPressed: () => controller.navigateToAdd(context),

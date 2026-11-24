@@ -21,7 +21,65 @@ class DatabaseHelper {
       path,
       version: 1,
       onCreate: _createDB,
+      onOpen: (db) async {
+        await _ensureCreditsTable(db);
+      },
     );
+  }
+
+  Future<void> _ensureCreditsTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS credits (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        credit_type TEXT NOT NULL,
+        to_name TEXT NOT NULL,
+        amount REAL NOT NULL,
+        due_date TEXT NOT NULL,
+        plan_type TEXT NOT NULL,
+        created_at TEXT NOT NULL
+      )
+    ''');
+
+    final count = Sqflite.firstIntValue(
+      await db.rawQuery('SELECT COUNT(*) FROM credits'),
+    );
+    if (count == null || count == 0) {
+      final now = DateTime.now().toIso8601String();
+      final batch = db.batch();
+      batch.insert('credits', {
+        'credit_type': 'Subscriptions',
+        'to_name': 'Netflix',
+        'amount': 850.00,
+        'due_date': 'Due Today',
+        'plan_type': 'Monthly',
+        'created_at': now,
+      });
+      batch.insert('credits', {
+        'credit_type': 'Subscriptions',
+        'to_name': 'Rohith',
+        'amount': 18500.00,
+        'due_date': 'Due on 10/12/26',
+        'plan_type': 'One-time',
+        'created_at': now,
+      });
+      batch.insert('credits', {
+        'credit_type': 'Bills',
+        'to_name': 'Electricity Bill',
+        'amount': 850.00,
+        'due_date': 'Due on 05/11/26',
+        'plan_type': 'Monthly',
+        'created_at': now,
+      });
+      batch.insert('credits', {
+        'credit_type': 'Insurance',
+        'to_name': 'Health Insurance',
+        'amount': 21000.00,
+        'due_date': 'Due on 01/01/27',
+        'plan_type': 'Yearly',
+        'created_at': now,
+      });
+      await batch.commit(noResult: true);
+    }
   }
 
   Future<void> _createDB(Database db, int version) async {

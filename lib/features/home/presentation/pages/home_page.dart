@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:expenzia/core/routes/app_routes.dart';
+import 'package:expenzia/features/credit/presentation/pages/credit_page.dart';
 import 'package:expenzia/features/expense/presentation/pages/add_expense_page.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_bloc.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_event.dart';
@@ -34,6 +35,11 @@ class HomePage extends StatelessWidget {
             // When index 1 (History / Add Expense) is selected, show AddExpensePage matching Figma 1:386
             if (navIndex == 1) {
               return const AddExpensePage(showBottomNav: false);
+            }
+
+            // When index 2 (Wallet / Credit) is selected, show CreditPage matching Figma 1:476
+            if (navIndex == 2) {
+              return CreditPage(showBottomNav: false);
             }
 
             if (state is HomeLoading) {

@@ -7,4 +7,5 @@ class AppRoutes {
   static const String transaction = '/transaction';
   static const String addExpense = '/add-expense';
   static const String editTransaction = '/edit-transaction';
+  static const String credit = '/credit';
 }

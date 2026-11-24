@@ -4,6 +4,12 @@ import 'package:expenzia/core/constants/app_strings.dart';
 import 'package:expenzia/core/routes/app_router.dart';
 import 'package:expenzia/core/routes/app_routes.dart';
 import 'package:expenzia/core/theme/app_theme.dart';
+import 'package:expenzia/features/credit/data/repositories/credit_repository_impl.dart';
+import 'package:expenzia/features/credit/domain/usecases/add_credit_usecase.dart';
+import 'package:expenzia/features/credit/domain/usecases/delete_credit_usecase.dart';
+import 'package:expenzia/features/credit/domain/usecases/get_credits_usecase.dart';
+import 'package:expenzia/features/credit/presentation/bloc/credit_bloc.dart';
+import 'package:expenzia/features/credit/presentation/bloc/credit_event.dart';
 import 'package:expenzia/features/expense/presentation/bloc/expense_bloc.dart';
 import 'package:expenzia/features/expense/presentation/bloc/expense_event.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_bloc.dart';
@@ -25,11 +31,18 @@ class ExpenziaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repository = TransactionRepositoryImpl();
-    final getTransactionsUseCase = GetTransactionsUseCase(repository);
-    final addTransactionUseCase = AddTransactionUseCase(repository);
-    final updateTransactionUseCase = UpdateTransactionUseCase(repository);
-    final deleteTransactionUseCase = DeleteTransactionUseCase(repository);
+    // Transaction Repository & UseCases
+    final transactionRepository = TransactionRepositoryImpl();
+    final getTransactionsUseCase = GetTransactionsUseCase(transactionRepository);
+    final addTransactionUseCase = AddTransactionUseCase(transactionRepository);
+    final updateTransactionUseCase = UpdateTransactionUseCase(transactionRepository);
+    final deleteTransactionUseCase = DeleteTransactionUseCase(transactionRepository);
+
+    // Credit Repository & UseCases
+    final creditRepository = CreditRepositoryImpl();
+    final getCreditsUseCase = GetCreditsUseCase(creditRepository);
+    final addCreditUseCase = AddCreditUseCase(creditRepository);
+    final deleteCreditUseCase = DeleteCreditUseCase(creditRepository);
 
     return MultiRepositoryProvider(
       providers: [
@@ -44,6 +57,15 @@ class ExpenziaApp extends StatelessWidget {
         ),
         RepositoryProvider<DeleteTransactionUseCase>.value(
           value: deleteTransactionUseCase,
+        ),
+        RepositoryProvider<GetCreditsUseCase>.value(
+          value: getCreditsUseCase,
+        ),
+        RepositoryProvider<AddCreditUseCase>.value(
+          value: addCreditUseCase,
+        ),
+        RepositoryProvider<DeleteCreditUseCase>.value(
+          value: deleteCreditUseCase,
         ),
       ],
       child: MultiBlocProvider(
@@ -60,6 +82,13 @@ class ExpenziaApp extends StatelessWidget {
               getTransactionsUseCase: getTransactionsUseCase,
               deleteTransactionUseCase: deleteTransactionUseCase,
             )..add(const LoadExpenseTransactionsEvent()),
+          ),
+          BlocProvider<CreditBloc>(
+            create: (_) => CreditBloc(
+              getCreditsUseCase: getCreditsUseCase,
+              addCreditUseCase: addCreditUseCase,
+              deleteCreditUseCase: deleteCreditUseCase,
+            )..add(const LoadCreditsEvent()),
           ),
         ],
         child: MaterialApp(
