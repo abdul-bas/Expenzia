@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:expenzia/features/expense/presentation/controllers/expense_controller.dart';
 import 'package:expenzia/features/transaction/domain/entities/transaction_entity.dart';
 
 class ExpenseListItem extends StatelessWidget {
   final TransactionEntity transaction;
-  final VoidCallback onDelete;
-  final VoidCallback? onEdit;
+  final ExpenseController controller;
 
   const ExpenseListItem({
     super.key,
     required this.transaction,
-    required this.onDelete,
-    this.onEdit,
+    required this.controller,
   });
-
-  String _formatAmount(double amount) {
-    final formatter = NumberFormat('#,##0.00');
-    return formatter.format(amount);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +20,7 @@ class ExpenseListItem extends StatelessWidget {
         isIncome ? const Color(0xFF25A969) : const Color(0xFFF95B51);
 
     return Dismissible(
-      key: Key('transaction_${transaction.id ?? transaction.createdAt.toIso8601String()}'),
+      key: Key('tx_${transaction.id ?? transaction.createdAt.toIso8601String()}'),
       direction: DismissDirection.endToStart,
       background: Container(
         color: const Color(0xFFFB3E3E),
@@ -39,31 +32,14 @@ class ExpenseListItem extends StatelessWidget {
           size: 22,
         ),
       ),
-      confirmDismiss: (direction) async {
-        return await showDialog<bool>(
-          context: context,
-          builder: (dialogContext) => AlertDialog(
-            title: const Text('Delete Transaction'),
-            content: Text('Are you sure you want to delete "${transaction.title}"?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(dialogContext, false),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(dialogContext, true),
-                child: const Text(
-                  'Delete',
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            ],
-          ),
-        );
+      confirmDismiss: (_) => controller.confirmDelete(context, transaction),
+      onDismissed: (_) {
+        if (transaction.id != null) {
+          controller.deleteTransaction(transaction.id!);
+        }
       },
-      onDismissed: (_) => onDelete(),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         decoration: const BoxDecoration(
           color: Colors.white,
           border: Border(
@@ -105,9 +81,9 @@ class ExpenseListItem extends StatelessWidget {
               ),
             ),
 
-            // Amount
+            // Formatted Amount
             Text(
-              '$amountSign\$ ${_formatAmount(transaction.amount)}',
+              '$amountSign\$ ${controller.formatAmount(transaction.amount)}',
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
@@ -119,17 +95,23 @@ class ExpenseListItem extends StatelessWidget {
 
             const SizedBox(width: 8),
 
-            // Delete action button
+            // Edit icon button with Icons.border_color matching user requirement
             IconButton(
               icon: const Icon(
                 Icons.border_color,
                 size: 20,
-                color: Color(0xFF999999),
+                color: Color(0xFF666666),
               ),
-              onPressed: () {
-                
-              },
+              onPressed: () => controller.navigateToEdit(context, transaction),
+              tooltip: 'Edit Transaction',
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
             ),
+
+            const SizedBox(width: 8),
+
+            // Delete icon button
+           
           ],
         ),
       ),

@@ -13,6 +13,7 @@ import 'package:expenzia/features/transaction/data/repositories/transaction_repo
 import 'package:expenzia/features/transaction/domain/usecases/add_transaction_usecase.dart';
 import 'package:expenzia/features/transaction/domain/usecases/delete_transaction_usecase.dart';
 import 'package:expenzia/features/transaction/domain/usecases/get_transactions_usecase.dart';
+import 'package:expenzia/features/transaction/domain/usecases/update_transaction_usecase.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,12 +28,16 @@ class ExpenziaApp extends StatelessWidget {
     final repository = TransactionRepositoryImpl();
     final getTransactionsUseCase = GetTransactionsUseCase(repository);
     final addTransactionUseCase = AddTransactionUseCase(repository);
+    final updateTransactionUseCase = UpdateTransactionUseCase(repository);
     final deleteTransactionUseCase = DeleteTransactionUseCase(repository);
 
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<AddTransactionUseCase>.value(
           value: addTransactionUseCase,
+        ),
+        RepositoryProvider<UpdateTransactionUseCase>.value(
+          value: updateTransactionUseCase,
         ),
         RepositoryProvider<GetTransactionsUseCase>.value(
           value: getTransactionsUseCase,

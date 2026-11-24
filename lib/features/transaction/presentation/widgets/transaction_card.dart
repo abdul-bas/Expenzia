@@ -4,123 +4,19 @@ import 'package:intl/intl.dart';
 import 'package:expenzia/features/transaction/presentation/bloc/transaction_bloc.dart';
 import 'package:expenzia/features/transaction/presentation/bloc/transaction_event.dart';
 import 'package:expenzia/features/transaction/presentation/bloc/transaction_state.dart';
+import 'package:expenzia/features/transaction/presentation/controllers/transaction_controller.dart';
 
 class TransactionCard extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController amountController;
+  final TransactionController controller;
 
   const TransactionCard({
     super.key,
     required this.nameController,
     required this.amountController,
+    required this.controller,
   });
-
-  void _showTypePicker(BuildContext context, bool currentIsIncome) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (bottomSheetContext) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Select Transaction Type',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF222222),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(
-                    Icons.arrow_upward_rounded,
-                    color: Color(0xFFF95B51),
-                  ),
-                  title: const Text(
-                    'Expense',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  trailing: !currentIsIncome
-                      ? const Icon(Icons.check, color: Color(0xFF2F7E79))
-                      : null,
-                  onTap: () {
-                    context
-                        .read<TransactionBloc>()
-                        .add(const ChangeTransactionTypeEvent(false));
-                    Navigator.pop(bottomSheetContext);
-                  },
-                ),
-                const Divider(),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(
-                    Icons.arrow_downward_rounded,
-                    color: Color(0xFF25A969),
-                  ),
-                  title: const Text(
-                    'Income',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  trailing: currentIsIncome
-                      ? const Icon(Icons.check, color: Color(0xFF2F7E79))
-                      : null,
-                  onTap: () {
-                    context
-                        .read<TransactionBloc>()
-                        .add(const ChangeTransactionTypeEvent(true));
-                    Navigator.pop(bottomSheetContext);
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _pickDate(BuildContext context, DateTime currentDate) async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: currentDate,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2035),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Color(0xFF2F7E79),
-              onPrimary: Colors.white,
-              onSurface: Color(0xFF222222),
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-
-    if (picked != null && context.mounted) {
-      context.read<TransactionBloc>().add(ChangeTransactionDateEvent(picked));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +59,17 @@ class TransactionCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               GestureDetector(
-                onTap: () => _showTypePicker(context, state.isIncome),
+                onTap: () async {
+                  final isIncome = await controller.showTypePicker(
+                    context,
+                    state.isIncome,
+                  );
+                  if (isIncome != null && context.mounted) {
+                    context
+                        .read<TransactionBloc>()
+                        .add(ChangeTransactionTypeEvent(isIncome));
+                  }
+                },
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(
@@ -336,7 +242,17 @@ class TransactionCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               GestureDetector(
-                onTap: () => _pickDate(context, state.selectedDate),
+                onTap: () async {
+                  final picked = await controller.pickDate(
+                    context,
+                    state.selectedDate,
+                  );
+                  if (picked != null && context.mounted) {
+                    context
+                        .read<TransactionBloc>()
+                        .add(ChangeTransactionDateEvent(picked));
+                  }
+                },
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(

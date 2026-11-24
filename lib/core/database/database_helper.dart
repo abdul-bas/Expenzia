@@ -95,6 +95,11 @@ class DatabaseHelper {
     return await db.delete(table, where: 'id = ?', whereArgs: [id]);
   }
 
+  Future<int> update(String table, Map<String, dynamic> data, int id) async {
+    final db = await database;
+    return await db.update(table, data, where: 'id = ?', whereArgs: [id]);
+  }
+
   Future<void> close() async {
     final db = _database;
     if (db != null) {

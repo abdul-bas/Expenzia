@@ -22,6 +22,16 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
+  Future<int> updateTransaction(TransactionEntity transaction) async {
+    final model = TransactionModel.fromEntity(transaction);
+    return await databaseHelper.update(
+      'transactions',
+      model.toMap(),
+      transaction.id!,
+    );
+  }
+
+  @override
   Future<int> deleteTransaction(int id) async {
     return await databaseHelper.delete('transactions', id);
   }

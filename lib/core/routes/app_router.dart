@@ -4,6 +4,8 @@ import 'package:expenzia/features/expense/presentation/pages/add_expense_page.da
 import 'package:expenzia/features/home/presentation/pages/home_page.dart';
 import 'package:expenzia/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:expenzia/features/splash/presentation/pages/splash_page.dart';
+import 'package:expenzia/features/transaction/domain/entities/transaction_entity.dart';
+import 'package:expenzia/features/transaction/presentation/pages/edit_transaction_page.dart';
 import 'package:expenzia/features/transaction/presentation/pages/transaction_page.dart';
 
 class AppRouter {
@@ -21,6 +23,11 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => TransactionPage());
       case AppRoutes.addExpense:
         return MaterialPageRoute(builder: (_) => const AddExpensePage());
+      case AppRoutes.editTransaction:
+        final transaction = settings.arguments as TransactionEntity;
+        return MaterialPageRoute(
+          builder: (_) => EditTransactionPage(transaction: transaction),
+        );
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());
     }

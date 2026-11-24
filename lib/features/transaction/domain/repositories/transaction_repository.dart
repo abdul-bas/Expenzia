@@ -3,5 +3,6 @@ import 'package:expenzia/features/transaction/domain/entities/transaction_entity
 abstract class TransactionRepository {
   Future<List<TransactionEntity>> getTransactions();
   Future<int> addTransaction(TransactionEntity transaction);
+  Future<int> updateTransaction(TransactionEntity transaction);
   Future<int> deleteTransaction(int id);
 }

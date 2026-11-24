@@ -4,6 +4,7 @@ import 'package:expenzia/features/transaction/domain/usecases/add_transaction_us
 import 'package:expenzia/features/transaction/presentation/bloc/transaction_bloc.dart';
 import 'package:expenzia/features/transaction/presentation/bloc/transaction_event.dart';
 import 'package:expenzia/features/transaction/presentation/bloc/transaction_state.dart';
+import 'package:expenzia/features/transaction/presentation/controllers/transaction_controller.dart';
 import 'package:expenzia/features/transaction/presentation/widgets/transaction_card.dart';
 import 'package:expenzia/features/transaction/presentation/widgets/transaction_header.dart';
 import 'package:expenzia/features/transaction/presentation/widgets/transaction_save_button.dart';
@@ -17,11 +18,15 @@ class TransactionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final addUseCase = context.read<AddTransactionUseCase>();
+    final controller = TransactionController(addTransactionUseCase: addUseCase);
 
     return BlocProvider<TransactionBloc>(
-      create: (_) => TransactionBloc(addTransactionUseCase: addUseCase),
+      create: (_) => TransactionBloc(
+        addTransactionUseCase: addUseCase,
+      ),
       child: BlocConsumer<TransactionBloc, TransactionState>(
-        listenWhen: (prev, curr) => curr.isSuccess || curr.errorMessage != null,
+        listenWhen: (prev, curr) =>
+            curr.isSuccess || curr.errorMessage != null,
         listener: (context, state) {
           if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -42,14 +47,12 @@ class TransactionPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            appBar: PreferredSize(
+          return Scaffold(appBar: PreferredSize(
               preferredSize: Size.fromHeight(100),
               child: AppBar(automaticallyImplyLeading: false,
                 flexibleSpace: TransactionHeader(
                   onBack: () => Navigator.pop(context),
-                ),
-              ),
+                ),),
             ),
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
@@ -66,6 +69,7 @@ class TransactionPage extends StatelessWidget {
                   TransactionCard(
                     nameController: _nameController,
                     amountController: _amountController,
+                    controller: controller,
                   ),
             
                   const SizedBox(height: 36),
@@ -74,11 +78,11 @@ class TransactionPage extends StatelessWidget {
                   TransactionSaveButton(
                     onSave: () {
                       context.read<TransactionBloc>().add(
-                        SubmitTransactionEvent(
-                          title: _nameController.text,
-                          amountString: _amountController.text,
-                        ),
-                      );
+                            SubmitTransactionEvent(
+                              title: _nameController.text,
+                              amountString: _amountController.text,
+                            ),
+                          );
                     },
                   ),
                 ],
