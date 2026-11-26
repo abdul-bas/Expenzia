@@ -23,6 +23,24 @@ Expenzia follows Clean Architecture principles to enforce a clear separation of 
 | **Domain** | Business logic, entities, and use cases |
 | **Data** | Repository implementations, data sources, and SQLite operations |
 
+### Project Structure
+
+The codebase is organized by feature, with each feature in its own directory under `features/`:
+
+```text
+lib/
+├── core/
+├── features/
+│   ├── credit/
+│   ├── expense/
+│   ├── home/
+│   ├── onboarding/
+│   ├── profile/
+│   ├── splash/
+│   └── transaction/
+└── main.dart
+```
+
 ## 💾 Data Storage
 
 The application uses SQLite to store and manage structured data locally on the device.
