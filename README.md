@@ -2,7 +2,7 @@
 
 A Flutter application built with **Clean Architecture**, **BLoC**, and **SQLite**, with a focus on maintainable code and efficient local data management.
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 | Category | Technology |
 | --- | --- |
@@ -13,7 +13,7 @@ A Flutter application built with **Clean Architecture**, **BLoC**, and **SQLite*
 | Local Database | SQLite |
 | AI-Assisted Development | Antigravity |
 
-## 🏗 Architecture
+##  Architecture
 
 Expenzia follows Clean Architecture principles to enforce a clear separation of concerns, making the codebase easier to maintain and extend. It is organized into three primary layers:
 
@@ -41,15 +41,15 @@ lib/
 └── main.dart
 ```
 
-## 💾 Data Storage
+##  Data Storage
 
 The application uses SQLite to store and manage structured data locally on the device.
 
-## 🤖 AI-Assisted Development
+##  AI-Assisted Development
 
 Antigravity's AI capabilities were used during development to evaluate implementation approaches, improve the workflow, and build features more efficiently.
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -83,7 +83,7 @@ Antigravity's AI capabilities were used during development to evaluate implement
    flutter run
    ```
 
-## 📚 Key Learnings
+##  Key Learnings
 
 This project provided practical experience in:
 
