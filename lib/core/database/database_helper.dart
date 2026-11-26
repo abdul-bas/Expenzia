@@ -23,6 +23,7 @@ class DatabaseHelper {
       onCreate: _createDB,
       onOpen: (db) async {
         await _ensureCreditsTable(db);
+        await _ensureProfileTable(db);
       },
     );
   }
@@ -146,6 +147,48 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> queryAll(String table) async {
     final db = await database;
     return await db.query(table, orderBy: 'id DESC');
+  }
+
+  Future<void> _ensureProfileTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS user_profile (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        avatar_path TEXT
+      )
+    ''');
+
+    final count = Sqflite.firstIntValue(
+      await db.rawQuery('SELECT COUNT(*) FROM user_profile'),
+    );
+    if (count == null || count == 0) {
+      await db.insert('user_profile', {
+        'name': 'Sahal Muhammed',
+        'avatar_path': 'assets/images/profile_avatar.png',
+      });
+    }
+  }
+
+  Future<Map<String, dynamic>?> getProfile() async {
+    final db = await database;
+    final results = await db.query('user_profile', limit: 1);
+    return results.isNotEmpty ? results.first : null;
+  }
+
+  Future<int> updateProfileName(String name) async {
+    final db = await database;
+    return await db.update(
+      'user_profile',
+      {'name': name},
+      where: 'id = 1',
+    );
+  }
+
+  Future<void> clearAllStorage() async {
+    final db = await database;
+    await db.delete('transactions');
+    await db.delete('credits');
+    await db.update('user_profile', {'name': 'Sahal Muhammed'});
   }
 
   Future<int> delete(String table, int id) async {

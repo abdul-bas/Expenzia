@@ -8,4 +8,5 @@ class AppRoutes {
   static const String addExpense = '/add-expense';
   static const String editTransaction = '/edit-transaction';
   static const String credit = '/credit';
+  static const String profile = '/profile';
 }

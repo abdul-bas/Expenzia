@@ -17,7 +17,7 @@ class CreditHeader extends StatelessWidget {
       color: const Color(0xFF2F7E79),
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top + 16,
-        bottom: 24,
+        bottom: 10,
         left: 20,
         right: 20,
       ),
