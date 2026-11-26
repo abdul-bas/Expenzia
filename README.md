@@ -1,67 +1,79 @@
 # Expenzia
 
-A Flutter application built with **Clean Architecture, BLoC, and SQLite**, focusing on maintainable code structure and efficient local data management.
+A Flutter application built with **Clean Architecture**, **BLoC**, and **SQLite**, with a focus on maintainable code and efficient local data management.
 
 ## 🛠 Tech Stack
 
-- **Framework:** Flutter
-- **Language:** Dart
-- **Architecture:** Clean Architecture
-- **State Management:** BLoC
-- **Local Database:** SQLite
-- **AI-Assisted Development:** Antigravity
+| Category | Technology |
+| --- | --- |
+| Framework | Flutter |
+| Language | Dart |
+| Architecture | Clean Architecture |
+| State Management | BLoC |
+| Local Database | SQLite |
+| AI-Assisted Development | Antigravity |
 
 ## 🏗 Architecture
 
-The project follows Clean Architecture to maintain a clear separation of concerns and make the codebase easier to maintain and extend.
+Expenzia follows Clean Architecture principles to enforce a clear separation of concerns, making the codebase easier to maintain and extend. It is organized into three primary layers:
 
-The architecture is organised into three main layers:
+| Layer | Responsibility |
+| --- | --- |
+| **Presentation** | UI components and BLoC state management |
+| **Domain** | Business logic, entities, and use cases |
+| **Data** | Repository implementations, data sources, and SQLite operations |
 
-- **Presentation:** UI components and BLoC state management.
-- **Domain:** Business logic, entities, and use cases.
-- **Data:** Repository implementations, data sources, and SQLite operations.
+## 💾 Data Storage
 
-## 💾 Database
-
-SQLite is used for local data storage, providing a structured way to manage application data directly on the device.
+The application uses SQLite to store and manage structured data locally on the device.
 
 ## 🤖 AI-Assisted Development
 
-Explored Antigravity's AI capabilities during development to improve the workflow, explore implementation approaches, and build features more efficiently.
+Antigravity's AI capabilities were used during development to evaluate implementation approaches, improve the workflow, and build features more efficiently.
 
 ## 🚀 Getting Started
 
-Clone the repository:
+### Prerequisites
 
-```bash
-git clone <your-repository-url>
-```
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) (includes Dart)
+- Git
+- A supported emulator, simulator, or physical device
 
-Navigate to the project directory:
+### Installation
 
-```bash
-cd expenzia
-```
+1. Clone the repository:
 
-Install dependencies:
+   ```bash
+   git clone <your-repository-url> expenzia
+   ```
 
-```bash
-flutter pub get
-```
+2. Navigate to the project directory:
 
-Run the application:
+   ```bash
+   cd expenzia
+   ```
 
-```bash
-flutter run
-```
+3. Install the dependencies:
 
-## 📚 What I Explored
+   ```bash
+   flutter pub get
+   ```
 
-- Implementing Clean Architecture in Flutter.
-- Managing application state using BLoC.
-- Integrating SQLite for local database operations.
-- Exploring AI-assisted development with Antigravity.
+4. Run the application:
+
+   ```bash
+   flutter run
+   ```
+
+## 📚 Key Learnings
+
+This project provided practical experience in:
+
+- Implementing Clean Architecture in Flutter
+- Managing application state with BLoC
+- Integrating SQLite for local database operations
+- Applying AI-assisted development with Antigravity
 
 ---
 
-**Built with Flutter & Dart. Always learning, building, and exploring new technologies.**
+**Built with Flutter and Dart.**
