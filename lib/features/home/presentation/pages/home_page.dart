@@ -11,6 +11,7 @@ import 'package:expenzia/features/home/presentation/widgets/custom_bottom_nav_ba
 import 'package:expenzia/features/home/presentation/widgets/home_header.dart';
 import 'package:expenzia/features/home/presentation/widgets/metrics_row.dart';
 import 'package:expenzia/features/home/presentation/widgets/transactions_history_section.dart';
+import 'package:expenzia/features/profile/presentation/pages/profile_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -26,65 +27,69 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        bottom: false,
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            final navIndex = state is HomeLoaded ? state.selectedNavIndex : 0;
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          final navIndex = state is HomeLoaded ? state.selectedNavIndex : 0;
+      
+          // When index 1 (History / Add Expense) is selected, show AddExpensePage matching Figma 1:386
+          if (navIndex == 1) {
+            return const AddExpensePage(showBottomNav: false);
+          }
+      
+          // When index 2 (Wallet / Credit) is selected, show CreditPage matching Figma 1:476
+          if (navIndex == 2) {
+            return CreditPage(showBottomNav: false);
+          }
 
-            // When index 1 (History / Add Expense) is selected, show AddExpensePage matching Figma 1:386
-            if (navIndex == 1) {
-              return const AddExpensePage(showBottomNav: false);
-            }
-
-            // When index 2 (Wallet / Credit) is selected, show CreditPage matching Figma 1:476
-            if (navIndex == 2) {
-              return CreditPage(showBottomNav: false);
-            }
-
-            if (state is HomeLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Color(0xFF2F7E79),
-                ),
-              );
-            }
-
-            if (state is HomeError) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Error: ${state.message}',
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                    const SizedBox(height: 12),
-                    ElevatedButton(
-                      onPressed: () {
-                        context
-                            .read<HomeBloc>()
-                            .add(const LoadHomeDataEvent());
-                      },
-                      child: const Text('Retry'),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            final loadedState = state is HomeLoaded
-                ? state
-                : const HomeLoaded(
-                    transactions: [],
-                    totalBalance: 0,
-                    totalIncome: 0,
-                    totalExpense: 0,
-                    dailyAverage: 0,
-                    weekly: 0,
-                  );
-
-            return SingleChildScrollView(
+          // When index 3 (Profile) is selected, show ProfilePage matching Figma 1:578
+          if (navIndex == 3) {
+            return const ProfilePage(showBottomNav: false);
+          }
+      
+          if (state is HomeLoading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFF2F7E79),
+              ),
+            );
+          }
+      
+          if (state is HomeError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Error: ${state.message}',
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () {
+                      context
+                          .read<HomeBloc>()
+                          .add(const LoadHomeDataEvent());
+                    },
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            );
+          }
+      
+          final loadedState = state is HomeLoaded
+              ? state
+              : const HomeLoaded(
+                  transactions: [],
+                  totalBalance: 0,
+                  totalIncome: 0,
+                  totalExpense: 0,
+                  dailyAverage: 0,
+                  weekly: 0,
+                );
+      
+          return SafeArea(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.only(
                 left: 20,
                 right: 20,
@@ -99,26 +104,26 @@ class HomePage extends StatelessWidget {
                     greeting: loadedState.greeting,
                     userName: loadedState.userName,
                   ),
-
+                  
                   const SizedBox(height: 20),
-
+                  
                   // Total Balance & Income/Expenses Card
                   BalanceCard(
                     totalBalance: loadedState.totalBalance,
                     totalIncome: loadedState.totalIncome,
                     totalExpense: loadedState.totalExpense,
                   ),
-
+                  
                   const SizedBox(height: 24),
-
+                  
                   // Daily Average & Weekly Metrics Cards
                   MetricsRow(
                     dailyAverage: loadedState.dailyAverage,
                     weekly: loadedState.weekly,
                   ),
-
+                  
                   const SizedBox(height: 28),
-
+                  
                   // Transactions History List
                   TransactionsHistorySection(
                     transactions: loadedState.transactions,
@@ -135,9 +140,9 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
       bottomNavigationBar: BlocSelector<HomeBloc, HomeState, int>(
         selector: (state) =>

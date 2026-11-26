@@ -14,6 +14,12 @@ import 'package:expenzia/features/expense/presentation/bloc/expense_bloc.dart';
 import 'package:expenzia/features/expense/presentation/bloc/expense_event.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_bloc.dart';
 import 'package:expenzia/features/home/presentation/bloc/home_event.dart';
+import 'package:expenzia/features/profile/data/repositories/profile_repository_impl.dart';
+import 'package:expenzia/features/profile/domain/usecases/clear_storage_usecase.dart';
+import 'package:expenzia/features/profile/domain/usecases/get_profile_usecase.dart';
+import 'package:expenzia/features/profile/domain/usecases/update_profile_name_usecase.dart';
+import 'package:expenzia/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:expenzia/features/profile/presentation/bloc/profile_event.dart';
 import 'package:expenzia/features/splash/presentation/pages/splash_page.dart';
 import 'package:expenzia/features/transaction/data/repositories/transaction_repository_impl.dart';
 import 'package:expenzia/features/transaction/domain/usecases/add_transaction_usecase.dart';
@@ -44,6 +50,12 @@ class ExpenziaApp extends StatelessWidget {
     final addCreditUseCase = AddCreditUseCase(creditRepository);
     final deleteCreditUseCase = DeleteCreditUseCase(creditRepository);
 
+    // Profile Repository & UseCases
+    final profileRepository = ProfileRepositoryImpl();
+    final getProfileUseCase = GetProfileUseCase(profileRepository);
+    final updateProfileNameUseCase = UpdateProfileNameUseCase(profileRepository);
+    final clearStorageUseCase = ClearStorageUseCase(profileRepository);
+
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<AddTransactionUseCase>.value(
@@ -67,6 +79,15 @@ class ExpenziaApp extends StatelessWidget {
         RepositoryProvider<DeleteCreditUseCase>.value(
           value: deleteCreditUseCase,
         ),
+        RepositoryProvider<GetProfileUseCase>.value(
+          value: getProfileUseCase,
+        ),
+        RepositoryProvider<UpdateProfileNameUseCase>.value(
+          value: updateProfileNameUseCase,
+        ),
+        RepositoryProvider<ClearStorageUseCase>.value(
+          value: clearStorageUseCase,
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -89,6 +110,13 @@ class ExpenziaApp extends StatelessWidget {
               addCreditUseCase: addCreditUseCase,
               deleteCreditUseCase: deleteCreditUseCase,
             )..add(const LoadCreditsEvent()),
+          ),
+          BlocProvider<ProfileBloc>(
+            create: (_) => ProfileBloc(
+              getProfileUseCase: getProfileUseCase,
+              updateProfileNameUseCase: updateProfileNameUseCase,
+              clearStorageUseCase: clearStorageUseCase,
+            )..add(const LoadProfileEvent()),
           ),
         ],
         child: MaterialApp(

@@ -123,6 +123,8 @@ class CreditPage extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, AppRoutes.home);
                 } else if (index == 1) {
                   Navigator.pushReplacementNamed(context, AppRoutes.addExpense);
+                } else if (index == 3) {
+                  Navigator.pushReplacementNamed(context, AppRoutes.profile);
                 }
               },
               onAddPressed: () {
